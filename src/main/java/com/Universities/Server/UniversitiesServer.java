@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.Universities.Exception.NoIdException;
 import com.Universities.Model.UniversitiesModel;
 import com.Universities.Repository.UniversitiesRepository;
 
@@ -25,8 +26,10 @@ public class UniversitiesServer {
 		return userData;
 	}
 	
-	public UniversitiesModel findOne(int Id)
+	public UniversitiesModel findOne(int Id) throws NoIdException
 	{
+		if(uniRepo.findById(Id).get()==null)
+			throw new NoIdException("Invalid Id");
 		return uniRepo.findById(Id).get();
 	}
 	
